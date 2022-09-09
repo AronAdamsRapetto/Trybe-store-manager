@@ -25,8 +25,8 @@ describe('Testes de unidade do productController', function () {
   
       await productController.getAllProducts(req, res);
   
-      expect(res.status).to.have.been.calledWith(200);
-      expect(res.status).to.have.been.calledWith(resolvedGetProducts);
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(res.json.calledWith(resolvedGetProducts)).to.be.equal(true);
     });
   });
 
@@ -44,8 +44,10 @@ describe('Testes de unidade do productController', function () {
   
       await productController.getProductById(req, res);
   
-      expect(res.status).to.have.been.calledWith(200);
-      expect(res.status).to.have.been.calledWith(resolvedGetProductById);
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(
+        res.json.calledWith(resolvedGetProductById)
+      ).to.be.equal(true);
     });
 
     it('verifica se o "getProductById" retorna um erro ao procurar produto inexistente', async function () {
@@ -61,10 +63,12 @@ describe('Testes de unidade do productController', function () {
 
       await productController.getProductById(req, res);
 
-      expect(res.status).to.have.been.calledWith(404);
-      expect(res.status).to.have.been.calledWith({
-        message: "Product not found",
-      });
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(
+        res.json.calledWith({
+          message: "Product not found",
+        })
+      ).to.be.equal(true);
     });
   });
 });
