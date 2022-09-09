@@ -1,4 +1,5 @@
 const { productModel } = require('../models');
+const validationName = require('./validations/validationNameSchema');
 
 const getAllProducts = async () => {
   const products = await productModel.getAllProducts();
@@ -12,7 +13,19 @@ const getProductById = async (id) => {
   return { type: 'NOT_FOUND', message: 'Product not found' };
 };
 
+const insertProduct = async (name) => {
+  const validation = validationName(name);
+
+  if (validation.type) return validation;
+
+  const insertedId = await productModel.insertProduct(name);
+  const insertedProduct = await productModel.getProductById(insertedId);
+
+  return { type: null, message: insertedProduct };
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
+  insertProduct,
 };
