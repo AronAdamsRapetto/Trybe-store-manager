@@ -2,7 +2,6 @@ const { nameSchema } = require('./schemas');
 
 const validationNameSchema = (name) => {
   const { error } = nameSchema.validate(name);
-  console.log(error);
   if (error) {
     return {
       type: error.message.includes('required')

@@ -40,4 +40,42 @@ describe('Testes de unidade do "productService"', function () {
       });
     });
   });
+
+  describe('Testes do "insertProduct', function () {
+    it('Verifica se "insertProduct" retorna um produto sem erro', async function () {
+      sinon.stub(productModel, "insertProduct").resolves(1);
+      sinon.stub(productModel, "getProductById").resolves({
+        id: 1,
+        name: "ProductX",
+      });
+
+      const result = await productService.insertProduct("ProductX");
+
+      expect(result).to.be.deep.equal({
+        type: null,
+        message: {
+          id: 1,
+          name: "ProductX",
+        },
+      });
+    });
+
+    it('Verifica se "insertProduct" retorna um erro ao passar um attr. inválido', async function () {
+      const result = await productService.insertProduct(undefined);
+
+      expect(result).to.be.deep.equal({
+        type: "INVALID_FIELD",
+        message: '"name" is required',
+      });
+    });
+
+    it('Verifica se "insertProduct" retorna um erro ao passar um valor inválido', async function () {
+      const result = await productService.insertProduct('a');
+
+      expect(result).to.be.deep.equal({
+        type: "INVALID_VALUE",
+        message: '"name" length must be at least 5 characters long',
+      });      
+    });
+  });
 });
