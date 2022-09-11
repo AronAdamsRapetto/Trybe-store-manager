@@ -13,7 +13,7 @@ describe('Testes de unidade do productController', function () {
   
   afterEach(sinon.restore);
 
-  describe('testes de "getAllProducts', function () {
+  describe('testes de unidade do "getAllProducts', function () {
     it('verifica se o "getAllProducts" retorna uma lista de produtos', async function () {
       const res = {};
       const req = {};
@@ -30,7 +30,7 @@ describe('Testes de unidade do productController', function () {
     });
   });
 
-  describe('Testes de "getProductById"', function () {
+  describe('Testes de unidade do "getProductById"', function () {
     it('verifica se o "getProductById" retorna um produto', async function () {
       const res = {};
       const req = { params: { id: 1 }};
@@ -71,4 +71,67 @@ describe('Testes de unidade do productController', function () {
       ).to.be.equal(true);
     });
   });
+
+  describe('Testes de unidade do "insertProduct"', function () {
+    it('Verifica se o "insertProduct" retorna o produto cadastrado com sucesso', async function () {
+      const res = {};
+      const req = { body: { name: "ProductX" } };
+
+      const expected = {
+        id: 1,
+        name: "ProductX",
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productService, 'insertProduct').resolves({ type: null, message: expected });
+
+      await productController.insertProduct(req, res);
+
+      expect(res.status.calledWith(201)).to.be.equal(true);
+      expect(res.json.calledWith(expected)).to.be.equal(true);
+    });
+
+    it('Verifica se o "insertProduct" retorna um erro ao passar a chave "name" errado', async function () {
+      const res = {};
+      const req = { body: { nam: "ProductX" } };     
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(productService, "insertProduct")
+        .resolves({ type: "INVALID_FIELD", message: '"name" is required' });
+
+      await productController.insertProduct(req, res);
+
+      expect(res.status.calledWith(400)).to.be.equal(true);
+      expect(
+        res.json.calledWith({ message: '"name" is required' })
+      ).to.be.equal(true);
+    });
+
+    it('Verifica se o "insertProduct" retorna um erro ao passar um valor para "name" inválido', async function () {
+      const res = {};
+      const req = { body: { name: "a" } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productService, "insertProduct").resolves({
+        type: "INVALID_VALUE",
+        message: '"name" length must be at least 5 characters long',
+      });
+
+      await productController.insertProduct(req, res);
+
+      expect(res.status.calledWith(422)).to.be.equal(true);
+      expect(
+        res.json.calledWith({
+          message: '"name" length must be at least 5 characters long',
+        })
+      ).to.be.equal(true);
+    });
+  });  
 });
