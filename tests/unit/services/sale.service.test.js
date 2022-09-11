@@ -4,7 +4,7 @@ const sinon = require("sinon");
 const { saleService } = require("../../../src/services");
 const { saleModel, productModel } = require("../../../src/models");
 
-const { sucessSaleInsert, productSaled } = require("./mocks/sale.service.mock");
+const { sucessSaleInsert, productSaled, getAllSalesReturn, getSaleByIdReturn } = require("./mocks/sale.service.mock");
 
 describe('Testes de unidade do "saleService"', function () {
 
@@ -63,6 +63,42 @@ describe('Testes de unidade do "saleService"', function () {
       ]);
 
       expect(result).to.be.deep.equal({ type: 'NOT_FOUND', message: 'Product not found' });
+    });
+  });
+
+  describe('Testes do "getAllSales', function () {
+    it('Verifica se "getAllSales" retorna uma lista de vendas', async function () {
+      sinon.stub(saleModel, "getAllSales").resolves(getAllSalesReturn);
+
+      const result = await saleService.getAllSales();
+
+      expect(result).to.be.deep.equal(getAllSalesReturn);
+    });
+  });
+
+  describe('Testes do "getSaleById', function () {
+    it('Verifica se "getSaleById" retorna uma venda', async function () {
+      sinon
+        .stub(saleModel, "getSaleById")
+        .resolves(getSaleByIdReturn);
+
+      const result = await saleService.getSaleById(1);
+
+      expect(result).to.be.deep.equal({
+        type: null,
+        message: getSaleByIdReturn,
+      });
+    });
+
+    it('Verifica se "getSaleById" retorna um erro ao passar um id inexistente', async function () {
+      sinon.stub(saleModel, "getSaleById").resolves(undefined);
+
+      const result = await saleService.getSaleById(999);
+
+      expect(result).to.be.deep.equal({
+        type: "NOT_FOUND",
+        message: "Sale not found",
+      });
     });
   });
 });
