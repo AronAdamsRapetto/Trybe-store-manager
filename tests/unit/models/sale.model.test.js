@@ -4,6 +4,8 @@ const sinon = require("sinon");
 const { saleModel } = require("../../../src/models");
 const connection = require("../../../src/models/connection");
 
+const { getAllSalesReturn, getSaleByIdReturn } = require('./mocks/sale.model.mock');
+
 
 describe('Testes de unidade do "saleModels"', function () {
 
@@ -26,6 +28,26 @@ describe('Testes de unidade do "saleModels"', function () {
       ]);
 
       expect(result).to.be.equal(1);
+    });
+  });
+
+  describe('Testes do "getAllSales', function () {
+    it('Verifica se "getAllSales" retorna uma lista de vendas', async function () {
+      sinon.stub(connection, "execute").resolves([getAllSalesReturn]);
+
+      const result = await saleModel.getAllSales();
+
+      expect(result).to.be.deep.equal(getAllSalesReturn);
+    });
+  });
+
+  describe('Testes do "getSaleById', function () {
+    it('Verifica se "getSaleById" retorna um produto', async function () {
+      sinon.stub(connection, "execute").resolves([getSaleByIdReturn]);
+
+      const result = await saleModel.getSaleById(1);
+
+      expect(result).to.be.deep.equal(getSaleByIdReturn);
     });
   });
 });

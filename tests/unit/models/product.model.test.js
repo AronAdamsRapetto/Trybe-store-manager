@@ -30,11 +30,11 @@ describe('Testes de unidade do "productModels"', function () {
     });
   });
 
-  describe('Testes do "getProductById', function () {
-    it('Verifica se "getProductById" retorna um produto', async function () {
+  describe('Testes do "insertProduct"', function () {
+    it('Verifica se "insertProduct" retorna o id do produto inserido', async function () {
       sinon.stub(connection, "execute").resolves([{ insertId: 1 }]);
 
-      const result = await productModel.insertProduct('ProductX');
+      const result = await productModel.insertProduct("ProductX");
 
       expect(result).to.be.equal(1);
     });
