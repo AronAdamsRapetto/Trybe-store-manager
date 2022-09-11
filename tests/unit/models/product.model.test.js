@@ -10,7 +10,7 @@ describe('Testes de unidade do "productModels"', function () {
 
   afterEach(sinon.restore);
 
-  describe('Testes do "getAllProducts', function () {
+  describe('Testes de unidade do "getAllProducts', function () {
     it('Verifica se "getAllProducts" retorna uma lista de produtos', async function () {
       sinon.stub(connection, "execute").resolves([resolvedGetProducts]);
 
@@ -20,13 +20,23 @@ describe('Testes de unidade do "productModels"', function () {
     });
   });
 
-  describe('Testes do "getProductById', function () {
+  describe('Testes de unidade do "getProductById', function () {
     it('Verifica se "getProductById" retorna um produto', async function () {
       sinon.stub(connection, "execute").resolves([[resolvedGetProductById]]);
 
       const result = await productModel.getProductById(1);
 
       expect(result).to.be.deep.equal(resolvedGetProductById);
+    });
+  });
+
+  describe('Testes de unidade do "getProductById', function () {
+    it('Verifica se "getProductById" retorna um produto', async function () {
+      sinon.stub(connection, "execute").resolves([{ insertId: 1 }]);
+
+      const result = await productModel.insertProduct('ProductX');
+
+      expect(result).to.be.equal(1);
     });
   });
 });
