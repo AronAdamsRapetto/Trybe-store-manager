@@ -19,16 +19,38 @@ const insertSale = async (sales) => {
   return insertId;
 };
 
-// const getAllSalesOrderedByid = (order) => {
-//   const sales = connection.execute(`
-//     SELECT * FROM StoreManager.sales_products
-//     ORDER BY sale_id ${order}
-//   `);
+const getAllSales = async () => {
+  const [sales] = await connection.execute(`
+    SELECT
+      sa_pr.sale_id AS saleId,
+      sa.date AS date,
+      sa_pr.product_id AS productId,
+      sa_pr.quantity AS quantity
+    FROM StoreManager.sales_products AS sa_pr
+    JOIN StoreManager.sales AS sa ON sa.id = sa_pr.sale_id
+    ORDER BY sale_id ASC, product_id ASC;
+  `);
 
-//   return sales;
-// };
+  return sales;
+};
+
+const getSaleById = async (id) => {
+  const [sale] = await connection.execute(`
+    SELECT
+      sa.date AS date,
+      sa_pr.product_id AS productId,
+      sa_pr.quantity AS quantity
+    FROM StoreManager.sales_products AS sa_pr
+    JOIN StoreManager.sales AS sa ON sa.id = sa_pr.sale_id
+    WHERE sa_pr.sale_id = ?
+    ORDER BY product_id ASC;
+  `, [id]);
+
+  return sale;
+};
 
 module.exports = {
   insertSale,
-  // getAllSalesOrderedByid,
+  getAllSales,
+  getSaleById,
 };
