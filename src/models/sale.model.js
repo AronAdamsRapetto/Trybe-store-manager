@@ -19,16 +19,16 @@ const insertSale = async (sales) => {
   return insertId;
 };
 
-const getAllSalesOrderedByid = (order) => {
-  const sales = connection.execute(`
-    SELECT * FROM StoreManager.sales_products
-    ORDER BY sale_id ${order}
-  `);
+// const getAllSalesOrderedByid = (order) => {
+//   const sales = connection.execute(`
+//     SELECT * FROM StoreManager.sales_products
+//     ORDER BY sale_id ${order}
+//   `);
 
-  return sales;
-};
+//   return sales;
+// };
 
 module.exports = {
   insertSale,
-  getAllSalesOrderedByid,
+  // getAllSalesOrderedByid,
 };

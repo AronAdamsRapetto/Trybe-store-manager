@@ -10,7 +10,7 @@ describe('Testes de unidade do "productModels"', function () {
 
   afterEach(sinon.restore);
 
-  describe('Testes de unidade do "getAllProducts', function () {
+  describe('Testes do "getAllProducts', function () {
     it('Verifica se "getAllProducts" retorna uma lista de produtos', async function () {
       sinon.stub(connection, "execute").resolves([resolvedGetProducts]);
 
@@ -20,7 +20,7 @@ describe('Testes de unidade do "productModels"', function () {
     });
   });
 
-  describe('Testes de unidade do "getProductById', function () {
+  describe('Testes do "getProductById', function () {
     it('Verifica se "getProductById" retorna um produto', async function () {
       sinon.stub(connection, "execute").resolves([[resolvedGetProductById]]);
 
@@ -30,7 +30,7 @@ describe('Testes de unidade do "productModels"', function () {
     });
   });
 
-  describe('Testes de unidade do "getProductById', function () {
+  describe('Testes do "getProductById', function () {
     it('Verifica se "getProductById" retorna um produto', async function () {
       sinon.stub(connection, "execute").resolves([{ insertId: 1 }]);
 
