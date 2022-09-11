@@ -13,7 +13,7 @@ describe('Testes de unidade do productController', function () {
   
   afterEach(sinon.restore);
 
-  describe('testes de unidade do "getAllProducts', function () {
+  describe('testes do "getAllProducts', function () {
     it('verifica se o "getAllProducts" retorna uma lista de produtos', async function () {
       const res = {};
       const req = {};
@@ -30,7 +30,7 @@ describe('Testes de unidade do productController', function () {
     });
   });
 
-  describe('Testes de unidade do "getProductById"', function () {
+  describe('Testes "getProductById"', function () {
     it('verifica se o "getProductById" retorna um produto', async function () {
       const res = {};
       const req = { params: { id: 1 }};
@@ -72,7 +72,7 @@ describe('Testes de unidade do productController', function () {
     });
   });
 
-  describe('Testes de unidade do "insertProduct"', function () {
+  describe('Testes do "insertProduct"', function () {
     it('Verifica se o "insertProduct" retorna o produto cadastrado com sucesso', async function () {
       const res = {};
       const req = { body: { name: "ProductX" } };
