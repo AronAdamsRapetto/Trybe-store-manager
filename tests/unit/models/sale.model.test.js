@@ -12,7 +12,7 @@ describe('Testes de unidade do "saleModels"', function () {
   afterEach(sinon.restore);
 
   describe('Testes do "insertSale', function () {
-    it('Verifica se "insertSale" o id das vendas cadastradas', async function () {
+    it('Verifica se "insertSale" retorna o id das vendas cadastradas', async function () {
       sinon.stub(connection, "execute")
         .onFirstCall().resolves([{ insertId: 1 }]);
 
@@ -48,6 +48,27 @@ describe('Testes de unidade do "saleModels"', function () {
       const result = await saleModel.getSaleById(1);
 
       expect(result).to.be.deep.equal(getSaleByIdReturn);
+    });
+  });
+
+  describe('Testes do "updateSale', function () {
+    it('Verifica se "updateSale" retorna as linhas afetadas ', async function () {
+      sinon
+        .stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+
+      const result = await saleModel.updateSale(1, 2, 30);
+
+      expect(result).to.be.equal(1);
+    });
+  });
+
+  describe('Testes do "removeSale', function () {
+    it('Verifica se "removeSale" retorna as linhas afetadas ', async function () {
+      sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+
+      const result = await saleModel.removeSale(1);
+
+      expect(result).to.be.equal(1);
     });
   });
 });
