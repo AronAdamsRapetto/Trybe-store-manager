@@ -39,6 +39,9 @@ const updateProduct = async (id, name) => {
 const removeProduct = async (id) => {
   const validateProduct = await getProductById(id);
   if (validateProduct.type) return validateProduct;
+
+  await productModel.removeProduct(id);
+  return { type: null, message: '' };
 };
 
 module.exports = {
