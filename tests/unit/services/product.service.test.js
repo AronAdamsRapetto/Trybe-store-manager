@@ -78,4 +78,61 @@ describe('Testes de unidade do "productService"', function () {
       });      
     });
   });
+
+
+  describe('Testes do "updateProduct', function () {
+    it('Verifica se "updateProduct" retorna um produto atualizado sem erro', async function () {
+      sinon.stub(productModel, "updateProduct").resolves(1);
+      sinon.stub(productModel, "getProductById").resolves({
+        id: 1,
+        name: "Martelo do Batman",
+      });
+
+      const result = await productService.updateProduct(1, 'Martelo do Batman');
+
+      expect(result).to.be.deep.equal({
+        type: null,
+        message: {
+          id: 1,
+          name: "Martelo do Batman",
+        },
+      });
+    });
+
+    it('Verifica se "updateProduct" retorna erro ao passar name inválido', async function () {
+      const result = await productService.updateProduct(1, undefined);
+
+      expect(result).to.be.deep.equal({
+        type: "INVALID_FIELD",
+        message: '"name" is required',
+      });
+    });
+  });
+
+  describe('Testes do "removeProduct', function () {
+    it('Verifica se "removeProduct" retorna um produto atualizado sem erro', async function () {
+      sinon.stub(productModel, "removeProduct").resolves(1);
+      sinon.stub(productModel, "getProductById").resolves({
+        id: 1,
+        name: "Martelo do Batman",
+      });
+
+      const result = await productService.removeProduct(1);
+
+      expect(result).to.be.deep.equal({ type: null, message: '' });
+    });
+
+    it('Verifica se "removeProduct" retorna erro ao passar id inválido', async function () {
+      sinon
+        .stub(productService, "getProductById")
+        .resolves({ type: "NOT_FOUND", message: "Product not found" });
+
+      const result = await productService.removeProduct(999);
+
+      expect(result).to.be.deep.equal({
+        type: "NOT_FOUND",
+        message: "Product not found",
+      });
+    });
+  });
 });
