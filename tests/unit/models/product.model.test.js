@@ -39,4 +39,24 @@ describe('Testes de unidade do "productModels"', function () {
       expect(result).to.be.equal(1);
     });
   });
+
+  describe('Testes do "updateProduct"', function () {
+    it('Verifica se "updateProduct" retorna o numero de linhas efetadas', async function () {
+      sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+
+      const result = await productModel.updateProduct("ProductX");
+
+      expect(result).to.be.equal(1);
+    });
+  });
+
+  describe('Testes do "removeProduct"', function () {
+    it('Verifica se "removeProduct" retorna o numero de linhas efetadas', async function () {
+      sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+
+      const result = await productModel.removeProduct("ProductX");
+
+      expect(result).to.be.equal(1);
+    });
+  });
 });
