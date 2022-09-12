@@ -5,15 +5,17 @@ const getProducts = (productIds) => productIds
   .map(async (productId) => productModel
     .getProductById(productId));
 
-const verifyProducts = (products) => products.some((product) => !product);
+const verifyProducts = async (sales) => {
+  const productIds = sales.map(({ productId }) => productId);
+  const products = await Promise.all(getProducts(productIds));
+  return products.some((product) => !product);
+};
 
 const insertSale = async (sales) => {
   const validation = validationSaleSchema(sales);
   if (validation.type) return validation;
 
-  const productIds = sales.map(({ productId }) => productId);
-  const products = await Promise.all(getProducts(productIds));
-  const someProductNotExist = verifyProducts(products);
+  const someProductNotExist = await verifyProducts(sales);
   if (someProductNotExist) return { type: 'NOT_FOUND', message: 'Product not found' };
 
   const saleId = await saleModel.insertSale(sales);
