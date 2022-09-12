@@ -33,8 +33,18 @@ const getSaleById = async (id) => {
   return { type: null, message: sale };
 };
 
+const removeSale = async (id) => {
+  const sale = await getSaleById(id);
+
+  if (sale.type) return sale;
+
+  await saleModel.removeSale(id);
+  return { type: null, message: '' };
+};
+
 module.exports = {
   insertSale,
   getAllSales,
   getSaleById,
+  removeSale,
 };
