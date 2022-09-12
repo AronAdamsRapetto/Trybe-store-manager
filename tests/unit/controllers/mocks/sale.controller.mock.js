@@ -46,8 +46,23 @@ const getSaleByIdReturn = [
   },
 ];
 
+const updateSaleReturn = {
+  saleId: 2,
+  itemsUpdated: [
+    {
+      productId: 1,
+      quantity: 10,
+    },
+    {
+      productId: 2,
+      quantity: 50,
+    },
+  ],
+};
+
 module.exports = {
   sucessSaleInsert,
   getAllSalesReturn,
   getSaleByIdReturn,
+  updateSaleReturn,
 }

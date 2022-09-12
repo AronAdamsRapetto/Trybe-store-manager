@@ -8,6 +8,7 @@ const {
   sucessSaleInsert,
   getAllSalesReturn,
   getSaleByIdReturn,
+  updateSaleReturn
 } = require("./mocks/sale.controller.mock");
 
 describe('Testes de unidade do saleController', function () {
@@ -154,6 +155,108 @@ describe('Testes de unidade do saleController', function () {
         .resolves({ type: "NOT_FOUND", message: "Sale not found" });
 
       await saleController.getSaleById(req, res);
+
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(
+        res.json.calledWith({
+          message: "Sale not found",
+        })
+      ).to.be.equal(true);
+    });
+  });
+
+  describe('Testes de unidade do "updateSale"', function () {
+    it('Verifica se retorna corretamente a atualização de venda com sucesso', async function () {
+      const res = {};
+      const req = {
+        params: { id: 1 },
+        body: [
+          {
+            productId: 1,
+            quantity: 10,
+          },
+          {
+            productId: 2,
+            quantity: 50,
+          },
+        ],
+      };
+  
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+  
+      sinon.stub(saleService, 'updateSale').resolves({ type: null, message: sucessSaleInsert });
+  
+      await saleController.updateSale(req, res);
+  
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(res.json.calledWith(sucessSaleInsert)).to.be.equal(true);
+    });
+
+    it('Verifica se retorna um erro ao tentar alterar uma venda inexistente', async function () {
+      const res = {};
+      const req = {
+        params: { id: 999 },
+        body: [
+          {
+            quantity: 2,
+          },
+          {
+            productId: 2,
+            quantity: 5,
+          },
+        ],
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(saleService, "updateSale")
+        .resolves({
+          type: "NOT_FOUND",
+          message: 'Sale not found',
+        });
+
+      await saleController.updateSale(req, res);
+
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(
+        res.json.calledWith({ message: 'Sale not found' })
+      ).to.be.equal(true);
+    });
+  });
+
+  describe('Testes "removeSale"', function () {
+    it('verifica se o "removeSale" retorna uma venda', async function () {
+      const res = {};
+      const req = { params: { id: 1 } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(saleService, "removeSale")
+        .resolves({ type: null, message: '' });
+
+      await saleController.removeSale(req, res);
+
+      expect(res.status.calledWith(204)).to.be.equal(true);
+      expect(res.json.calledWith()).to.be.equal(true);
+    });
+
+    it('verifica se o "removeSale" retorna um erro ao deletar venda inexistente', async function () {
+      const res = {};
+      const req = { params: { id: 999 } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(saleService, "removeSale")
+        .resolves({ type: "NOT_FOUND", message: "Sale not found" });
+
+      await saleController.removeSale(req, res);
 
       expect(res.status.calledWith(404)).to.be.equal(true);
       expect(
