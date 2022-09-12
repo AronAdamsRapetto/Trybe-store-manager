@@ -133,5 +133,99 @@ describe('Testes de unidade do productController', function () {
         })
       ).to.be.equal(true);
     });
-  });  
+  });
+
+  describe('Testes do "updateProduct"', function () {
+    it('Verifica se o "updateProduct" retorna o produto atualizado com sucesso', async function () {
+      const res = {};
+      const req = { params: { id: 1 }, body: { name: "Martelo do Batman" } };
+
+      const expected = {
+        id: 1,
+        name: "Martelo do Batman",
+      };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productService, 'updateProduct').resolves({ type: null, message: expected });
+
+      await productController.updateProduct(req, res);
+
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(res.json.calledWith(expected)).to.be.equal(true);
+    });
+
+    it('Verifica se o "updateProduct" retorna um erro tentar alterar um produto inexistente', async function () {
+      const res = {};
+      const req = { params: { id: 999 }, body: { name: "Martelo do Batman" } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(productService, "updateProduct")
+        .resolves({ type: "NOT_FOUND", message: "Product not found" });
+
+      await productController.updateProduct(req, res);
+
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(res.json.calledWith({ message: "Product not found" })).to.be.equal(true);
+    });
+
+    it('Verifica se o "updateProduct" retorna um erro ao passar um "name" inválido', async function () {
+      const res = {};
+      const req = { params: { id: 1 }, body: { n: "Martelo do Batman" } };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(productService, "updateProduct")
+        .resolves({ type: "INVALID_FIELD", message: '"name" is required' });
+
+      await productController.updateProduct(req, res);
+
+      expect(res.status.calledWith(400)).to.be.equal(true);
+      expect(
+        res.json.calledWith({ message: '"name" is required' })
+      ).to.be.equal(true);
+    });
+  });
+
+  describe('Testes do "removeProduct"', function () {
+    it('Verifica se o "removeProduct" retorna status 204 sem mensagem', async function () {
+      const res = {};
+      const req = { params: { id: 1 } };      
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(productService, 'removeProduct').resolves({ type: null, message: '' });
+
+      await productController.removeProduct(req, res);
+
+      expect(res.status.calledWith(204)).to.be.equal(true);
+      expect(res.json.calledWith()).to.be.equal(true);
+    });
+
+     it('Verifica se o "removeProduct" retorna erro ao passar id inexistente', async function () {
+       const res = {};
+       const req = { params: { id: 999 } };
+
+       res.status = sinon.stub().returns(res);
+       res.json = sinon.stub().returns();
+
+       sinon
+         .stub(productService, "removeProduct")
+         .resolves({ type: "NOT_FOUND", message: "Product not found" });
+
+       await productController.removeProduct(req, res);
+
+       expect(res.status.calledWith(404)).to.be.equal(true);
+       expect(
+         res.json.calledWith({ message: "Product not found", })
+       ).to.be.equal(true);
+     });
+  });
 });
