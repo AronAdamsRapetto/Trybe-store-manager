@@ -13,7 +13,7 @@ As stacks utilizadas para o desenvolvimento desta aplicação foram:
 ![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=flat-square&logo=docker&logoColor=white)
 
 
-Foi utilizadO um banco de dados MySQL para a gestão de dados deste projeto.
+Foi utilizado um banco de dados MySQL para a gestão de dados deste projeto.
 
 ## Executando o projeto
 ---
