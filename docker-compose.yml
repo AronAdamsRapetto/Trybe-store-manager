@@ -9,10 +9,8 @@ services:
     container_name: store_manager
     # Mesmo que `docker run -t`
     tty: true
-    # Mesmo que `docker run -i`
     stdin_open: true
-    # Substitui o comando padrão da imagem do node
-    command: bash # você pode subistituir `bash` por `npm run debug` para iniciar a API quando container for iniciado  
+    command: bash
     # Restarta a imagem caso algo a faça parar
     restart: always
     # Diretório padrão de execução
