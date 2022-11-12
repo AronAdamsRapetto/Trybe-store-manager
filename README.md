@@ -4,7 +4,7 @@
 
 Este projeto foi desenvolvido de forma individual durante o programa de formação da Trybe.
 Neste projeto desenvolvi minha primeira API utilizando a arquitetura MSC.
-A API RESTful construída é um sistema de gerenciamento de vendas em que é possível criar, visualizar, deletar e atualizar produtos e vendas. Você deverá utilizar o banco de dados MySQL para a gestão de dados.
+A API RESTful construída é um sistema de gerenciamento de vendas em que é possível criar, visualizar, deletar e atualizar produtos e vendas.
 
 As stacks utilizadas para o desenvolvimento desta aplicação foram:
 ![Node](https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
