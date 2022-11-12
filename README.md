@@ -20,48 +20,54 @@ Foi utilizada um banco de dados MySQL para a gestão de dados deste projeto.
 #### Com Docker
 Para rodar o projeto com o docker será necessário que além do [docker](https://www.docker.com/), o  [docker-compose](https://github.com/docker/compose) também esteja instalado em sua máquina.
 
-Acesse o terminal e instale as depêndencias na raiz do projeto:
-
-```
-npm install
-```
-
-Ainda na raiz do projeto digite o seguinte comando
+Na raiz do projeto digite o seguinte comando
 ```
 docker-compose up -d
 ```
-Os containers para execução do projeto irão ser inicados e a API já estará no ar, porém ainda precisamos construir e popular o banco de dados.
-
-## Criando a base de dados
-
-No terminal acesse o container mysql com o seguinte comando:
+Os containers para execução do projeto irão ser inicados agora precisamos instalar as depêndencias e botar a API no ar.
+Acesse o terminal do container node com o seguinte comando
 ```
-docker exec -it store_manager_db bash
+docker exec -it store_manager bash
 ```
-Após estar dentro do container será necessário conectar-se ao banco, digite o seguinte comando no terminal
+Instale as depêndencias do projeto:
 ```
-mysql -u root -p
+npm install
 ```
-Será necessário digitar a senha do banco de dados, caso haja modificado as variáveis de ambiente no arquivo do docker-compose digite a nova senha especificada por você, caso contrário apenas digite `password`.
+Agora execute este comando para iniciar a API:
+```
+npm run debug
+```
 
-Na raiz do projeto existe um arquivo `migration.sql`, copie o conteúdo deste arquivo e cole no terminal. Todas as querys foram executadas com exceção da útima, precione `enter` para executá-la. Isto criou o banco e as tabelas, agora precisamos popular o banco com alguns dados.
-
-Na raiz do projeto existe um arquivo `seed.sql`, copie conteúdo deste arquivo e cole no terminal, novamente todas as querys foram executadas com exceção da útima, precione `enter` para executá-la.
 
 ---
 ### Localmente
-❗Para rodar o projeto localmente será necessário ter instalado o  [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) v16+ em sua máquina.
+❗Para rodar o projeto localmente será necessário ter instalado o  [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) v16+ e um servidor MySQL já ativo  em sua máquina.
 
 Acesse o terminal e instale as depêndencias na raiz do projeto:
-
 ```
 npm install
 ```
 Em seguida dê start na aplicação:
 ```
-npm start
+npm run debug
 ```
-Caso não abra automaticamente, vá no seu navegador e acesse `localhost:3000`.
+---
+## Criando a base de dados
+
+Caso esteja utilizando o docker, no terminal acesse o container mysql com o seguinte comando e siga os seguintes passos normalmente:
+```
+docker exec -it store_manager_db bash
+```
+Conecte-se ao banco e digite o seguinte comando no terminal:
+```
+mysql -u root -p
+```
+Será necessário digitar a senha do banco de dados. Caso haja modificado as variáveis de ambiente no arquivo do docker-compose digite a nova senha especificada por você, caso contrário apenas digite `password`.
+
+Na raiz do projeto existe um arquivo `migration.sql`, copie o conteúdo deste arquivo e cole no terminal. Todas as querys foram executadas com exceção da útima, precione `enter` para executá-la. Isto criou o banco e as tabelas, agora precisamos popular o banco com alguns dados.
+
+Na raiz do projeto existe um arquivo `seed.sql`, copie conteúdo deste arquivo e cole no terminal, novamente todas as querys foram executadas com exceção da útima, precione `enter` para executá-la.
+
 
 ## Executando os testes
 ---
