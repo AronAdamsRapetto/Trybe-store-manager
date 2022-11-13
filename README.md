@@ -17,7 +17,7 @@ Foi utilizado um banco de dados MySQL para a gestão de dados deste projeto.
 
 ## Executando o projeto
 ---
-#### Com Docker
+### Com Docker
 ❗Para rodar o projeto com o docker será necessário que além do [docker](https://www.docker.com/), o  [docker-compose](https://github.com/docker/compose) também esteja instalado em sua máquina.
 
 Na raiz do projeto digite o seguinte comando
@@ -52,7 +52,7 @@ Em seguida dê start na aplicação:
 npm run debug
 ```
 ---
-## Criando a base de dados
+### Criando a base de dados
 
 Caso esteja utilizando o docker, acesse o container mysql com o seguinte comando e siga os passos a seguir normalmente:
 ```
@@ -68,18 +68,46 @@ Na raiz do projeto existe um arquivo `migration.sql`, copie o conteúdo deste ar
 
 Na raiz do projeto existe um arquivo `seed.sql`, copie o conteúdo deste arquivo e cole no terminal, novamente todas as querys foram executadas com exceção da útima, precione `enter` para executá-la.
 
+Tudo pronto, API no ar e banco de dados criado!
+
 ## Endpoints
 ---
+Os endpoints de verbo http `GET` podem ser executados através do navegador, porém, para poder explorar o funcionamento dos demais enpoints será necessário utilizar alguma ferramenta dedicada a fazer requisições, como por exemplo: [Insomnia](https://insomnia.rest/download), [Postman](https://www.postman.com/) ou a extensão do VScode [Thunder Client](https://www.thunderclient.com/).
 
+Na raiz do projeto existe um arquivo chamado `Insomnia_endpoints.json`, este arquivo contém todos os endpoints na aplicação, sendo necessário apenas importa-lo dentro de uma collection do seu Insomnia.
+
+Abaixo estão os endpoints da aplicação:
+Caso não haja mudado a porta de exposição da API, ela estará exposta na porta `3000`. Seguindo o seguinte prefixo `http://localhost:3000/<endpoint>`
+
+#### Endpoints de products 
+| Método HTTP | Endpoint | Body JSON|
+| ----------- | -------- | ---- |
+| GET | /products | - |
+| GET | /products/search?q=<texto_de_busca> | - |
+| GET | /products/:id | - |
+| POST | /products |  { "name": "product_name" } |
+| PUT | /products/:id | { "name": "product_name" } |
+| DELETE | /products/:id | - |
+
+#### Endpoints de sales 
+| Método HTTP | Endpoint | Body JSON|
+| ----------- | -------- | ---- |
+| GET | /sales | - |
+| GET | /sales/:id | - |
+| POST | /sales |  [{ "productId": x, "quantity": y }, ...] |
+| PUT | /sales/:id | [{ "productId": x, "quantity": y }, ...] |
+| DELETE | /sales/:id | - |
 ## Executando os testes
 ---
-Os testes só serão executados após a instalação das depêndencias.
+Certifique-se de ter iniciado a aplicação corretamente na seção `Executando o projeto`. 
 
-No terminal digite o seguinte comando:
+Caso esteja utilizando o docker, acesse o container node com o seguinte comando e siga os passos a seguir normalmente:
 ```
-npm test
+docker exec -it store_manager bash
 ```
-Para verificar a cobertura de testes da aplicação execute no terminal:
+
+No terminal digite o comando abaixo para executar os testes de cobertura:
 ```
-npm run test-coverage
+npm run test:mocha
 ```
+
