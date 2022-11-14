@@ -20,7 +20,7 @@ Foi utilizado um banco de dados MySQL para a gestão de dados deste projeto.
 ### Com Docker
 ❗Para rodar o projeto com o docker será necessário que além do [docker](https://www.docker.com/), o  [docker-compose](https://github.com/docker/compose) também esteja instalado em sua máquina.
 
-Na raiz do projeto digite o seguinte comando
+Na raiz do projeto digite o seguinte comando:
 ```
 docker-compose up -d
 ```
@@ -62,7 +62,7 @@ Conecte-se ao banco digitando o comando abaixo no terminal:
 ```
 mysql -u root -p
 ```
-Será necessário digitar a senha do banco de dados. Caso haja modificado as variáveis de ambiente no arquivo do docker-compose digite a nova senha especificada por você, caso contrário apenas digite `password`.
+Será necessário digitar a senha do banco de dados. Caso haja modificado as variáveis de ambiente no arquivo do docker-compose, digite a nova senha especificada por você, caso contrário apenas digite `password`.
 
 Na raiz do projeto existe um arquivo `migration.sql`, copie o conteúdo deste arquivo e cole no terminal. Todas as querys foram executadas com exceção da útima, precione `enter` para executá-la. Isto criou o banco e as tabelas, agora precisamos popular o banco com alguns dados.
 
@@ -74,10 +74,10 @@ Tudo pronto, API no ar e banco de dados criado!
 ---
 Os endpoints de verbo http `GET` podem ser executados através do navegador, porém, para poder explorar o funcionamento dos demais enpoints será necessário utilizar alguma ferramenta dedicada a fazer requisições, como por exemplo: [Insomnia](https://insomnia.rest/download), [Postman](https://www.postman.com/) ou a extensão do VScode [Thunder Client](https://www.thunderclient.com/).
 
-Na raiz do projeto existe um arquivo chamado `Insomnia_endpoints.json`, este arquivo contém todos os endpoints na aplicação, sendo necessário apenas importa-lo dentro de uma collection do seu Insomnia.
+Na raiz do projeto existe um arquivo chamado `Insomnia_endpoints.json`, este arquivo contém todos os endpoints da aplicação, sendo necessário apenas importá-lo dentro de uma collection do seu Insomnia.
 
 Abaixo estão os endpoints da aplicação:
-Caso não haja mudado a porta de exposição da API, ela estará exposta na porta `3000`. Seguindo o seguinte prefixo `http://localhost:3000/<endpoint>`
+Caso não haja mudado a porta de exposição da API, ela estará exposta na porta `3000`. Seguindo a seguinte URL `http://localhost:3000/<endpoint>`
 
 #### Endpoints de products 
 | Método HTTP | Endpoint | Body JSON|
