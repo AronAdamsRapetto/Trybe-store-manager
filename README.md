@@ -1,4 +1,4 @@
-# Projeto - Store manager - EM CONSTRUÇÃO
+# Projeto - Store manager
 ---
 ## O que foi desenvolvido:
 
